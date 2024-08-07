@@ -1,41 +1,20 @@
-[ApiController]
-[Route("api/[controller]")]
-public class BanksController : ControllerBase
+using BankWebAPI.Models.Dto;
+using Microsoft.AspNetCore.Mvc;
+
+namespace BankWebAPI.Controller
 {
-    private readonly BankingContext _context;
-
-    public BanksController(BankingContext context)
+    [Route("api/BankController")]
+    [ApiController]
+    public class BankController : ControllerBase
     {
-        _context = context;
-    }
-
-    [HttpGet]
-    
-    public async Task<ActionResult<IEnumerable<Bank>>> GetBanks()
-    {
-        return await _context.Banks.Include(b => b.Branches).ToListAsync();
-    }
-
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Bank>> GetBank(int id)
-    {
-        var bank = await _context.Banks.Include(b => b.Branches)
-                                        .FirstOrDefaultAsync(b => b.Id == id);
-        if (bank == null)
+        [HttpGet]
+        public IEnumerable<BankDTO> GetBanks()
         {
-            return NotFound();
+            return new List<BankDTO>
+            {
+                new() {id=1,bankname="SBI"},
+                new() {id=2,bankname="UBI"}
+            };
         }
-
-        return bank;
     }
-
-    [HttpPost]
-    public async Task<ActionResult<Bank>> PostBank(Bank bank)
-    {
-        _context.Banks.Add(bank);
-        await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetBank), new { id = bank.Id }, bank);
-    }
-
-    // Implement other CRUD actions (PUT, DELETE)
 }

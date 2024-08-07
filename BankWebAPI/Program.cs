@@ -23,18 +23,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-public class Program
-{
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services.AddDbContext<BankingContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-
-        services.AddControllers();
-        // Other services
-    }
-
-    // Other configurations
-}
-

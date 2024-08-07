@@ -1,6 +1,6 @@
-namespace BankWebAPI.Models
+namespace BankWebAPI.Models.Dto
 {
-    public class Branch
+    public class BranchDTO
     {
         public int id { get; set; }
         public string branchname { get; set; }
