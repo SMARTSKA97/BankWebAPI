@@ -1,4 +1,5 @@
-using BankWebAPI.Models.Dto;
+using BankWebAPI.Data;
+using BankWebAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankWebAPI.Controllers
@@ -8,13 +9,27 @@ namespace BankWebAPI.Controllers
     public class BranchController : ControllerBase
     {
         [HttpGet]
-        public IEnumerable<BranchDTO> GetBranches()
+        public async Task<ActionResult<IEnumerable<Branch>>> GetBranches()
         {
-            return new List<BranchDTO>
+            return BranchStore.BranchList;
+        }
+
+        [HttpGet("{id:int}")]
+        public ActionResult<Branch> GetBranch(int id)
+        {
+            if (id == 0)
             {
-                 new () {id=1,branchname="Kolkata",address="Esplanade",state="WB",micrcode="654987",ifsccode="SBIN0012345",bankid=1}, 
-                 new () {id=2,branchname="Siliguri",address="Hillcart Road",state="WB",micrcode="987654",ifsccode="UBIN879654", bankid=2}
-            };
+                return BadRequest();
+            }
+
+            var branch = BranchStore.BranchList.FirstOrDefault(u => u.Id == id);
+
+
+            if (branch == null)
+            {
+                return NotFound();
+            }
+            return Ok(branch);
         }
     }
 }

@@ -1,8 +1,11 @@
+using BankWebAPI.Models.Dto;
+
 namespace BankWebAPI.Models
 {
     public class Bank
     {
-        public int id { get; set; }
-        public string bankname { get; set; }
+        public int Id { get; set; }
+        public string BankName { get; set; }
+        public ICollection<Branch> Branches { get; set; }
     }
 }
