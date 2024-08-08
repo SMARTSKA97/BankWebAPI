@@ -1,7 +1,4 @@
 using BankWebAPI.Models;
-using BankWebAPI.Controller;
-using BankWebAPI.Data;
-using Microsoft.VisualBasic;
 
 namespace BankWebAPI.Data
 {

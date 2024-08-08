@@ -1,6 +1,17 @@
+
+using BankWebAPI;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+//Registering ApplicationDbContext
+
+builder.Services.AddDbContext<ApplicationDbContext>(option => {
+    option.UseNpgsql(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
+});
+
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
